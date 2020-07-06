@@ -3,6 +3,10 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'francoiscabrol/ranger.vim'
 Plugin 'junegunn/goyo.vim'
 Plugin 'LukeSmithxyz/vimling'
 Plugin 'vimwiki/vimwiki'
@@ -11,6 +15,10 @@ call vundle#end()
 filetype plugin indent on
 
 " Basics
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
 let mapleader =" "
 set encoding=utf-8
 set number relativenumber
@@ -21,7 +29,7 @@ syntax on
 " Disables autocomment on newline
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Readable goyo for prose
-    map <leader>f :Goyo \| set linebreak<CR>
+    map <leader>g :Goyo \| set linebreak<CR>
 " Spell-check
     map <leader>o :setlocal spell! spelllang=en_us<CR>
 " Split open at bottom right
@@ -64,6 +72,19 @@ syntax on
     inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
     vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
     map <Space><Tab> <Esc>/<++><Enter>"_c4l
+
+" PEP-8 indentation
+au BufNewFile,BufRead *.py
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=79
+    set expandtab
+    set autoindent
+    set fileformat=unix
+
+" Mark Unnecessary whitespace in python and C files
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 set tabstop=4
 set autoindent
